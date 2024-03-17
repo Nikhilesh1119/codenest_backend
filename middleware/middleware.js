@@ -1,18 +1,29 @@
-// const LocalStorage = require('node-localStorage').LocalStorage;
-// var localStorage = new LocalStorage('./scratch');
-import jwt from 'jsonwebtoken';
-import 'dotenv/config';
+import { error } from "../utils/responseWrapper.js";
+import jwt from "jsonwebtoken";
+import User from "../models//User.js";
+import "dotenv/config";
 
-export const fetchuser = (req, res, next) => {
+export const fetchuser = async (req, res, next) => {
+  if (
+    !req.headers ||
+    !req.headers.authorization ||
+    !req.headers.authorization?.startsWith("Bearer ")
+  ) {
+    return res.send(error(401, "authentication header is required"));
+  }
+  const accesstoken = req.headers.authorization.split(" ")[1];
   try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return res.status(401).send({ error: "Please authenticate using a valid token" });
+    const decoded = jwt.verify(
+      accesstoken,
+      process.env.ACCESS_TOKEN_PRIVATE_KEY
+    );
+    req._id = decoded._id;
+    const user = await User.findById(req._id);
+    if (!user) {
+      return res.send(error(404, "user not found"));
     }
-    const data = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = data.user;
     next();
-  } catch (error) {
-    res.status(401).send({ error: "Please Authenticate using a valid token" });
+  } catch (e) {
+    return res.send(error(401, "invalid access token"));
   }
 };

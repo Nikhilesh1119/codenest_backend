@@ -1,10 +1,8 @@
 import express from "express";
-import {addTag,getTag,tagdesc} from '../controller/tags.js';
-
+import { getTag } from "../controller/tags.js";
+import { fetchuser } from "../middleware/middleware.js";
 const router = express.Router();
 
-router.post("/addtag", addTag);
-router.get("/tagdesc/:tagname",tagdesc);
-router.get("/gettag", getTag);
+router.get("/gettag", fetchuser, getTag);
 
 export default router;

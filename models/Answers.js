@@ -17,17 +17,21 @@ const AnswerSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    votes:{
-        type:Number,
-        required:true
-    },
+    upvotes: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'user',
+        },
+      ],
+      downvotes: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'user',
+        },
+      ],
     date:{
         type:Date,
         default:Date.now()
-    },
-    status:{
-        type:String,
-        default: "Not Accepted"
     }
 })
 

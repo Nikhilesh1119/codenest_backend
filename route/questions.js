@@ -1,29 +1,23 @@
-import express from 'express';
-import * as Q from '../controller/questions.js'
-
+import express from "express";
+import * as Q from "../controller/questions.js";
+import { fetchuser } from "../middleware/middleware.js";
 const router = express.Router();
 
-router.post('/addquestion', Q.addQuestion );
+router.post("/addquestion", fetchuser, Q.addQuestion);
+router.post("/getfiltereduserquestions", Q.getFilteredUserQuestions);
 
-router.delete('/deletequestion/:id', Q.deleteQuestions );
+router.delete("/deletequestion/:id", fetchuser, Q.deleteQuestions);
 
-router.put('/updatequestion/:id', Q.updateQuestion );
-router.put('/upvote/:id', Q.upVote);
-router.put('/downvote/:id', Q.downVote);
+router.put("/updatequestion/:id", fetchuser, Q.updateQuestion);
+router.put("/upvote/:id", fetchuser, Q.upVote);
+router.put("/downvote/:id", fetchuser, Q.downVote);
 
-router.get('/getquestions', Q.getQuestions );
-router.get('/getquestionbyhighvotes/:id', Q.getQuestionsByHighVotes);
-router.get('/getquestion/:id', Q.getQuestionsById );
-router.get('/getquestion/:name', Q.getUsersQuestions);
-router.get('/getalltags', Q.getAllTags);
-router.get('/getusertag/:name', Q.getUserTag);
-router.get('/getuservotes/:name', Q.getUserVotes);
-router.get('/getallvotes', Q.getAllVotes);
-router.get('/getquestionsbytag', Q.getQuestionsByTag);
-router.get('/answeredquestions', Q.answeredQuestion);
-router.get('/unansweredquestions', Q.unAnsweredQuestion);
-router.get('/search', Q.search);
-router.get('/getfiltereduserquestions', Q.getFilteredUserQuestions);
-router.get('/getallfilteredquestions', Q.getAllFilteredQuestions);
+router.get("/getquestions", Q.getQuestions);
+router.get("/getquestionbyhighvotes/:id", Q.getQuestionsByHighVotes);
+router.get("/getquestion/:id", Q.getQuestionsById);
+router.get("/getquestionbyname/:name", Q.getUsersQuestions);
+router.get("/getuservotes/:id", Q.getUserVotes);
+router.get("/getallvotes", Q.getAllVotes);
+router.get("/getquestionsbytag", Q.getQuestionsByTag);
 
 export default router;

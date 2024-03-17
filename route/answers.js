@@ -1,30 +1,24 @@
-import express from 'express';
-import * as A from '../controller/answers.js'
-import { fetchuser } from '../middleware/middleware.js';
+import express from "express";
+import * as A from "../controller/answers.js";
+import { fetchuser } from "../middleware/middleware.js";
 
 const router = express.Router();
 
-router.post('/addanswer/:id',fetchuser, A.addAnswer);
+router.post("/addanswer/:id", fetchuser, A.addAnswer);
+router.post("/userfilteredanswer", A.userFilteredAnswer);
 
-router.get('/getanswer', A.getAnswer);
-router.get('/getanswer/:id',A.getAnswerById);
-router.get('/answertoupdate/:id',A.userAnswerToUpdate);
-router.get('/useranswer/:username',A.getUserAnswer);
-router.get('/userfilteredanswer/:username',A.userFilteredAnswer);
-router.get('/allfilteredanswer',A.allFilteredAnswer);
-router.get('/allansweredtags',A.allAnswersTags);
-router.get('/useransweredtags',A.userAnswersTags);
-router.get('/useransweredquestions',A.userAnsweredQuestions);
-router.get('useracceptedansweredquestions',A.userAcceptedAnsweredQuestions);
-router.get('/totalanswer',A.noOfAnswer);
-router.get('/getvotes',A.getVotes);
-router.get('/points',A.points);
+router.put("/upvote/:id", fetchuser, A.upVote);
+router.put("/downvote/:id", fetchuser, A.downVote);
 
-router.put('/updateanswer/:id', A.updatedAnswer);
-router.put('/upvote',A.upVote);
-router.put('/downvote',A.downVote);
-router.put('/acceptanswer',A.acceptAnswer);
+router.get("/getanswer/:id", A.getAnswerById);
+router.get("/useranswer/:username", A.getUserAnswer);
+router.get("/totalanswer", A.noOfAnswer);
+router.get("/getvotes", A.getVotes);
+router.get("/getuseransvotes/:name", A.getUserAnswerVotes);
+router.get("/points/:name", A.points);
 
-router.delete('/answers/:id', A.deleteAnswer);
+router.put("/updateanswer/:id", fetchuser, A.updatedAnswer);
+
+router.delete("/deleteanswer/:id", fetchuser, A.deleteAnswer);
 
 export default router;
