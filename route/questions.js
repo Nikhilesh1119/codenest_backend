@@ -13,11 +13,9 @@ router.put("/upvote/:id", fetchuser, Q.upVote);
 router.put("/downvote/:id", fetchuser, Q.downVote);
 
 router.get("/getquestions", Q.getQuestions);
-router.get("/getquestionbyhighvotes/:id", Q.getQuestionsByHighVotes);
 router.get("/getquestion/:id", Q.getQuestionsById);
 router.get("/getquestionbyname/:name", Q.getUsersQuestions);
 router.get("/getuservotes/:id", Q.getUserVotes);
 router.get("/getallvotes", Q.getAllVotes);
-router.get("/getquestionsbytag", Q.getQuestionsByTag);
 
 export default router;

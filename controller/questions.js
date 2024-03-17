@@ -31,16 +31,6 @@ export const getQuestions = async (req, res) => {
   }
 };
 
-export const getQuestionsByHighVotes = async (req, res) => {
-  try {
-    const questions = await Question.find({}).sort({ votes: -1 });
-    res.status(200).json(questions);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).send("Internal server error");
-  }
-};
-
 export const getQuestionsById = async (req, res) => {
   try {
     let question = await Question.findOne({ _id: req.params.id });
