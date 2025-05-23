@@ -5,13 +5,11 @@ import "dotenv/config";
 
 export const fetchuser = async (req, res, next) => {
   if (
-    !req.headers ||
-    !req.headers.authorization ||
-    !req.headers.authorization?.startsWith("Bearer ")
+    !req?.headers?.authorization?.startsWith("Bearer ")
   ) {
     return res.send(error(401, "authentication header is required"));
   }
-  const accesstoken = req.headers.authorization.split(" ")[1];
+  const accesstoken = req?.headers?.authorization?.split(" ")[1];
   try {
     const decoded = jwt.verify(
       accesstoken,
